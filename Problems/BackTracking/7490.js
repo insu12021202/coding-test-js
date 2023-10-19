@@ -19,24 +19,25 @@ for (let i = 1; i < t + 1; i++) {
 
     // dfs
     const dfs = (result, exp, depth) => {
-        if (depth == n && result == 0) {
+        if (depth == n && eval(exp.replaceAll(" ", "")) == 0) {
             answer.push(exp);
             return;
         }
         list.map((num) => {
             if (!visited[num] && exp[exp.length - 1] < String(num)) {
                 visited[num] = true;
+                // 공백으로 붙여서 넘기기
+                dfs(result * 10 + num, exp + ` ${num}`, depth + 1);
+                visited[num] = false;
                 // 합해서 넘기기
                 dfs(result + num, exp + `+${num}`, depth + 1);
                 // 빼서 넘기기
                 dfs(result - num, exp + `-${num}`, depth + 1);
-                // 공백으로 붙여서 넘기기
-                dfs(result * 10 + num, exp + ` ${num}`, depth - 1);
-                visited[num] = false;
             }
         });
     };
 
     dfs(1, exp, 1);
-    console.log(answer);
+    console.log(answer.join("\n"));
+    console.log("");
 }
