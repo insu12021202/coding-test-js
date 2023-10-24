@@ -7,7 +7,7 @@ input = [...input].map((x) => x.replace("\r", ""));
 
 let [n, k] = input[0].split(" ").map(Number);
 
-let visited = Array.from({ length: 100000 }, () => 0);
+let visited = Array.from({ length: 100001 }, () => 0);
 
 const bfs = (start) => {
     const q = [];
@@ -15,11 +15,12 @@ const bfs = (start) => {
 
     while (q.length !== 0) {
         let v = q.shift();
+
         if (v == k) {
             return visited[v];
         }
 
-        for (let next of [v + 1, v - 1, v * 2]) {
+        for (let next of [v - 1, v + 1, v * 2]) {
             if (next < 0 || next > 100000) continue;
             if (visited[next] == 0) {
                 q.push(next);
@@ -29,4 +30,5 @@ const bfs = (start) => {
     }
 };
 
-console.log(bfs(n));
+let answer = bfs(n);
+console.log(answer);
